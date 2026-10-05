@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # 1. DATABASE: PostgreSQL with pgvector
+  # ==========================================
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: jobmatch_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      POSTGRES_DB: ${POSTGRES_DB:-jobmatch_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d jobmatch_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # 2. BACKEND: FastAPI + Hybrid Search + AI
+  # ==========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobmatch_backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres123}@postgres:5432/${POSTGRES_DB:-jobmatch_db}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-mock-key}
+      EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-mock} # 'openai' or 'mock' (for local testing without API key)
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock} # 'openai' or 'mock'
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+      - ./data:/app/data
+
+  # ==========================================
+  # 3. PIPELINE: Crawler & Data Ingestion Worker
+  # ==========================================
+  pipeline:
+    build:
+      context: ./pipelines
+      dockerfile: Dockerfile
+    container_name: jobmatch_pipeline
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres123}@postgres:5432/${POSTGRES_DB:-jobmatch_db}
+      BACKEND_URL: http://backend:8000
+    volumes:
+      - ./pipelines:/app
+      - ./data:/data
+    command: python ingest_jobs.py
+
+  # ==========================================
+  # 4. FRONTEND: Web UI & Dashboard
+  # ==========================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jobmatch_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api/v1
+
+volumes:
+  pgdata:

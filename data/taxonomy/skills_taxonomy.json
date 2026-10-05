@@ -1,0 +1,118 @@
+{
+  "categories": [
+    "Backend",
+    "Frontend",
+    "DevOps & Cloud",
+    "Data & AI",
+    "Database",
+    "Mobile",
+    "Testing"
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "category": "Backend",
+      "aliases": ["python", "python3", "py"]
+    },
+    {
+      "name": "FastAPI",
+      "category": "Backend",
+      "aliases": ["fastapi", "fast-api"]
+    },
+    {
+      "name": "Java",
+      "category": "Backend",
+      "aliases": ["java", "core java", "java 8", "java 11", "java 17"]
+    },
+    {
+      "name": "Spring Boot",
+      "category": "Backend",
+      "aliases": ["spring boot", "springboot", "spring-boot", "spring framework"]
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend",
+      "aliases": ["nodejs", "node.js", "node", "expressjs", "express.js", "nest.js", "nestjs"]
+    },
+    {
+      "name": "Go",
+      "category": "Backend",
+      "aliases": ["golang", "go language", "go"]
+    },
+    {
+      "name": "React",
+      "category": "Frontend",
+      "aliases": ["reactjs", "react.js", "react", "react 18"]
+    },
+    {
+      "name": "Vue.js",
+      "category": "Frontend",
+      "aliases": ["vue", "vuejs", "vue.js", "vue 3"]
+    },
+    {
+      "name": "TypeScript",
+      "category": "Frontend",
+      "aliases": ["typescript", "ts"]
+    },
+    {
+      "name": "Docker",
+      "category": "DevOps & Cloud",
+      "aliases": ["docker", "docker compose", "containerization"]
+    },
+    {
+      "name": "Kubernetes",
+      "category": "DevOps & Cloud",
+      "aliases": ["k8s", "kubernetes", "kube"]
+    },
+    {
+      "name": "AWS",
+      "category": "DevOps & Cloud",
+      "aliases": ["aws", "amazon web services", "ec2", "s3", "lambda", "ecs", "eks"]
+    },
+    {
+      "name": "CI/CD",
+      "category": "DevOps & Cloud",
+      "aliases": ["ci/cd", "github actions", "gitlab ci", "jenkins", "argocd"]
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Database",
+      "aliases": ["postgres", "postgresql", "psql", "pgvector"]
+    },
+    {
+      "name": "MongoDB",
+      "category": "Database",
+      "aliases": ["mongodb", "mongo"]
+    },
+    {
+      "name": "Redis",
+      "category": "Database",
+      "aliases": ["redis", "in-memory cache"]
+    },
+    {
+      "name": "Apache Airflow",
+      "category": "Data & AI",
+      "aliases": ["airflow", "apache airflow", "dagster", "prefect"]
+    },
+    {
+      "name": "Apache Spark",
+      "category": "Data & AI",
+      "aliases": ["spark", "pyspark", "apache spark"]
+    },
+    {
+      "name": "Machine Learning",
+      "category": "Data & AI",
+      "aliases": ["ml", "machine learning", "scikit-learn", "xgboost"]
+    },
+    {
+      "name": "Deep Learning / LLM",
+      "category": "Data & AI",
+      "aliases": ["llm", "deep learning", "pytorch", "tensorflow", "rag", "langchain", "llamaindex", "transformers", "openai"]
+    },
+    {
+      "name": "Vector Search",
+      "category": "Data & AI",
+      "aliases": ["vector search", "pgvector", "pinecone", "qdrant", "milvus", "semantic search", "embeddings"]
+    }
+  ]
+}
